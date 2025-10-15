@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-const shopSchema = new mongoose.Schema({
+ export const ShopSchema = new mongoose.Schema({
   owner:{
     type:  mongoose.Schema.Types.ObjectId,
     ref:"User",
@@ -15,19 +15,21 @@ const shopSchema = new mongoose.Schema({
     type: String,
     required: true,
     unique: true,
-     trim:true,
+    trim:true,
   },
   logoUrl:{
     type: String,
-    default:"/images/default-logo.jpg"
+    default:"/images/logo.png"
   },
   description:{
     type: String,
     default:"You are welcome to our online store!"
   },
-  products:[{
+  products:{
     type:  mongoose.Schema.Types.ObjectId,
     ref:"Product",
-  }],
-  });
- // export  mongoose.model("shop", shopSchema);
+  },
+  timestamps: true ,
+ });
+ const Shop = mongoose.model("Shop", ShopSchema);
+ export default Shop;
