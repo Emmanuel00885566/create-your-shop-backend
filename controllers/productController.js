@@ -32,7 +32,9 @@ export const getAllProducts = async () => {
 };
 
 export const getSingleProduct = async (product_name) => {
-    const result = await Product.findOne({ product_name });
+    const result = await Product.findOne({ 
+        product_name: { $regex: new RegExp(`^${product_name}$`, "i") } 
+    });
     console.log("Product found", result);
     return result;
 };

@@ -6,7 +6,7 @@ const productSchema = new mongoose.Schema(
         description: { type: String },
         price: { type: Number, required: true },
         category: { type: String },
-        imagePath: { type: String }, // Image path from Multer
+        image: { type: String }, // Image path from Multer
         stock: { type: Number, default: 0 },
         shop: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' }, //  required: true 
     },
