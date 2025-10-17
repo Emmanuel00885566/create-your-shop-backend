@@ -1,9 +1,16 @@
 import multer from 'multer';
+import fs from 'fs';
+
+// Ensures uploads directory exists
+const uploadsDir = './uploads';
+if (!fs.existsSync(uploadsDir)) {
+    fs.mkdirSync(uploadsDir, { recursive: true });
+}
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
         console.log("Saving to uploads folder...");
-        cb(null, './uploads'); 
+        cb(null, uploadsDir); 
     },
     filename: (req, file, cb) => {
         console.log("Incoming file:", file.originalname);
@@ -14,6 +21,7 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
+    console.log("File mimetype:", file.mimetype);
     if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
     } else {

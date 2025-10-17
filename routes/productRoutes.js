@@ -4,12 +4,25 @@ import { upload } from '../config/multer.js';
 
 const router = express.Router();
 
-// CREATE PRODUCT **Image path is not perfect, otherwise working perfectly**
-router.post("/create_product", upload.single("image"), async (req, res) => {
+// CREATE PRODUCT **Working perfectly**
+router.post("/create_product", (req, res, next) => {
+    upload.single("image")(req, res, function(err) {
+        if (err) {
+            console.error("Multer error:", err);
+            if (err instanceof multer.MulterError) {
+                if (err.code === 'LIMIT_FILE_SIZE') {
+                    return res.status(400).json({ error: "File too large" });
+                }
+            }
+            return res.status(400).json({ error: err.message });
+        }
+        next();
+    });
+}, async (req, res) => {
     const { product_name, description, price, category, stock, shop } = req.body;
     const image = req.file ? req.file.path : null;
 
-    console.log("Image path:", image);
+    console.log("Final image path:", image);
     
     try {
         await createProduct (product_name, description, price, category, image, stock, shop);
