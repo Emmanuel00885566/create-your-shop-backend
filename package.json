@@ -3,14 +3,12 @@
   "version": "1.0.0",
   "description": "Backend system for multi-store web app built with Node.js, Express.js, MongoDB, JWT, and Multer",
   "main": "server.js",
-  "type": "module",
   "scripts": {
     "start": "node server.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon server.js"
   },
   "repository": {
-    "type": "git",
     "url": "git+https://github.com/Emmanuel00885566/create-your-shop-backend.git"
   },
   "keywords": [],
@@ -29,5 +27,6 @@
   },
   "devDependencies": {
     "nodemon": "^3.1.10"
-  }
+  },
+  "type": "module"
 }
