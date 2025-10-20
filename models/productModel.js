@@ -2,13 +2,13 @@ import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema(
     {
-        product_name: { type: String, required: true },
+        shop: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop', required: true, unique: true },
+        product_name: { type: String, required: true, trim: true },
         description: { type: String },
         price: { type: Number, required: true },
         category: { type: String },
         image: { type: String }, // Image path from Multer
-        stock: { type: Number, default: 0 },
-        shop: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop' }, //  required: true 
+        stock: { type: Number, default: 0 }, 
     },
     { timestamps: true }
 );
