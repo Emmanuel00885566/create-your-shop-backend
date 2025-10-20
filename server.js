@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
+import orderRoutes from "./routes/orderRoutes.js";
 
 dotenv.config();
 
@@ -17,6 +18,8 @@ mongoose
 app.get("/", (req, res) => {
   res.send("Create Your Shop Backend (ESM Version) is running...");
 });
+
+app.use("/api/orders", orderRoutes);
 
 app.listen(port, () => {
   console.log(`Server running on port ${port}`);
