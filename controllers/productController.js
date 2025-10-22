@@ -40,14 +40,20 @@ export const getSingleProduct = async (product_name) => {
 };
 
 export const updateProduct = async (product_name, updatedFields) => {
-    const result = await Product.updateOne(
-        { product_name },
-        { $set: updatedFields }
-    );
-    console.log("Product updated:", result);
+  const product = await Product.findOneAndUpdate(
+    { product_name },
+    { $set: updatedFields },
+    { new: true }
+  );
+
+  if (!product) throw new Error("Product not found");
+  return product;
 };
 
 export const deleteProduct = async (product_name) => {
-    const result = await Product.deleteOne({ product_name});
-    console.log("Product removed:", result);
+  const product = await Product.findOne({ product_name });
+  if (!product) throw new Error("Product not found");
+
+  await Product.deleteOne({ product_name });
+  return { message: "Product deleted successfully" };
 };
