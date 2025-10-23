@@ -1,27 +1,36 @@
 import express from "express";
-import dotenv from "dotenv";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 import authRoutes from "./routes/authRoutes.js";
+import orderRoutes from "./routes/orderRoutes.js";
+import productRoutes from "./routes/productRoutes.js";
 
 dotenv.config();
 
 const app = express();
+const PORT = process.env.PORT || 5000;
 
 app.use(express.json());
 
-app.use("/api/auth", authRoutes);
-
-app.get("/", (req, res) => {
-  res.send("Create Your Shop Backend is running...");
-});
-
-const PORT = process.env.PORT || 5000;
-const MONGO_URI = process.env.MONGO_URI || "mongodb://localhost:27017/createYourShop";
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 mongoose
-  .connect(MONGO_URI)
-  .then(() => {
-    console.log("✅ MongoDB connected successfully");
-    app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
-  })
-  .catch((err) => console.error("❌ MongoDB connection failed:", err));
+  .connect(process.env.MONGO_URI)
+  .then(() => console.log("✅ MongoDB connected successfully"))
+  .catch((err) => console.error("❌ MongoDB connection error:", err));
+
+app.get("/", (req, res) => {
+  res.send("🚀 Create Your Shop Backend is running successfully!");
+});
+
+app.use("/api/auth", authRoutes);
+app.use("/api/orders", orderRoutes);
+app.use("/api/products", productRoutes);
+
+app.listen(PORT, () => {
+  console.log(`✅ Server running on http://localhost:${PORT}`);
+});
