@@ -1,15 +1,20 @@
 import express from "express";
+import {
+  createShop,
+  updateShop,
+  getShopBySlug,
+} from "../controllers/ShopController.js";
+import { protect } from "../middlewares/authMiddleware.js";
 
-import * as ShopController from "/controllers/ShopController.js";
+const router = express.Router();
 
-import protect from "/middlewares/authMiddleware.js"
+// Create new shop (protected)
+router.post("/", protect, createShop);
 
-export const router = express.Router();
+// Update existing shop (protected)
+router.put("/", protect, updateShop);
 
- router.post('/', protect,ShopController.createshop);
+// Get shop by slug (public)
+router.get("/:slug", getShopBySlug);
 
- router.get('/me',protect,ShopController.getOwnerShop);
-
- router.put('/me',protect,ShopController.getOwnerShop);
-
- router.get('/:slug',ShopController.getShopBySlug);
+export default router;
