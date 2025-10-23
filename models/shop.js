@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
- export const ShopSchema = new mongoose.Schema({
+const ShopSchema = new mongoose.Schema({
   owner:{
     type:  mongoose.Schema.Types.ObjectId,
     ref:"User",
@@ -27,8 +27,10 @@ import mongoose from 'mongoose';
   },
   products:{
     type:  mongoose.Schema.Types.ObjectId,
-    ref:"Product",
+    ref:"Product" },
   },
-  timestamps: true ,
- });
+  { timestamps: true }
+);
  const Shop = mongoose.model("Shop", ShopSchema);
+
+ export default Shop;

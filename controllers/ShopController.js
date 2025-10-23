@@ -1,8 +1,9 @@
-import Shop from "/models/Shop.js";
-import User from '/models/User.js';
-import Product from '/models/Product.js';
+import Shop from "../models/shop.js";
+import User from '../models/User.js';
+import Product from '../models/productModel.js';
 import slugify from 'slugify';
-exports.createShop =async(req,res) => {
+
+export const createShop =async(req,res) => {
 const userId= req.user._id;
 const {name,description} = req.body;
 if (!name){
@@ -36,7 +37,8 @@ console.error(error);
 res.status(500).json({message:"server error during shop Creation."});
 }
 };
-exports.getShopBySlug =async (req, res) =>{
+
+export const getShopBySlug =async (req, res) =>{
 try{
 const {slug} =req.params;
 const shop =await Shop.findOne({slug});
@@ -62,7 +64,7 @@ description:shop.description
 }
 };
 
-exports.updateShop = async (req, res) => {
+export const updateShop = async (req, res) => {
 const shopId = req.user.shop;
 if (!shopId) {
 return res.status(400).json({ message: 'You must create a shop before updating it.' });
