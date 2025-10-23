@@ -32,4 +32,3 @@ import mongoose from 'mongoose';
   timestamps: true ,
  });
  const Shop = mongoose.model("Shop", ShopSchema);
- export default Shop;
