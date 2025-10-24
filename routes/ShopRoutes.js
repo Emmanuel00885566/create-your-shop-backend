@@ -3,6 +3,7 @@ import {
   createShop,
   updateShop,
   getShopBySlug,
+  getAllShops,
 } from "../controllers/ShopController.js";
 import { protect } from "../middlewares/authMiddleware.js";
 import multer from "multer";
@@ -28,6 +29,9 @@ router.post("/create_shop", protect,
 
 // Update existing shop (protected)
 router.put("/update_shop", protect, updateShop);
+
+// Get all shops (public or protected based on your logic)
+router.get("/", getAllShops);
 
 // Get shop by slug (public)
 router.get("/:slug", getShopBySlug);

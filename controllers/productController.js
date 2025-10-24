@@ -2,7 +2,7 @@
 •	Ensure that only the shop owner can modify their products.
 */
 
-import Product from "../models/productModel.js";
+import Product from "../models/Product.js";
 
 export const createProduct = async (product_name, 
     description, 
