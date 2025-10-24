@@ -11,6 +11,7 @@ import slugify from "slugify";
 export const createShop = async (req, res) => {
   const userId = req.user._id;
   const { name, description } = req.body;
+  const logoUrl = req.file ? req.file.path : "";
 
   if (!name) {
     return res.status(400).json({ message: "Shop name is required." });
@@ -38,6 +39,7 @@ export const createShop = async (req, res) => {
       owner: userId,
       name,
       slug,
+      logoUrl,
       description,
     });
 

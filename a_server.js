@@ -6,7 +6,7 @@ const app = express();
 const PORT = 5000;
 
 app.use(express.json());
-// app.use("/uploads", express.static("uploads")); // to view images in browser
+app.use("/uploads", express.static("uploads")); // to view images in browser
 
 const startServer = async () => {
     await connectToMongoDB();

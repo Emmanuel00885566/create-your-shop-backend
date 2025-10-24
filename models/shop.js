@@ -21,7 +21,7 @@ const shopSchema = new mongoose.Schema(
     },
     logoUrl: {
       type: String,
-      default: "/images/default-logo.png",
+      default: "/uploads/default-logo.png",
     },
     description: {
       type: String,
