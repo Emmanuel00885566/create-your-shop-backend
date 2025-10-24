@@ -6,7 +6,7 @@ const shopSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
-      unique: true, // each user can only have one shop
+      unique: true, 
     },
     name: {
       type: String,
