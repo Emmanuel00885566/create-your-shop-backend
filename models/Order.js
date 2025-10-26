@@ -10,6 +10,7 @@ const OrderItemSchema = new mongoose.Schema(
   { _id: false }
 );
 
+<<<<<<< HEAD
 const OrderSchema = new mongoose.Schema(
   {
     shop: { type: mongoose.Schema.Types.ObjectId, ref: "Shop", required: true },
@@ -30,5 +31,20 @@ const OrderSchema = new mongoose.Schema(
   },
   { timestamps: true }
 );
+=======
+const OrderSchema = new mongoose.Schema({
+  shop: { type: mongoose.Schema.Types.ObjectId, ref: 'Shop', required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+  customerName: { type: String, required: true },
+  customerEmail: { type: String, required: true },
+  deliveryAddress: { type: String, required: true },
+  deliveryStatus: { type: String, enum: ['Pending','In Transit','Delivered'], default: 'Pending' },
+  items: [OrderItemSchema],
+  total: { type: Number, required: true },
+  status: { type: String, enum: ['pending','processing','completed','cancelled'], default: 'pending' },
+  createdAt: { type: Date, default: Date.now },
+  meta: { type: mongoose.Schema.Types.Mixed }
+})
+>>>>>>> 948c3c9 (Finalized updates for Order and Product controllers)
 
 export default mongoose.model("Order", OrderSchema);

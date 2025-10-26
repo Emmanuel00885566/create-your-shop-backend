@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import express from "express";
 import multer from "multer";
 import { upload } from "../config/multer.js";
@@ -96,3 +97,28 @@ router.delete("/:product_name", async (req, res) => {
 });
 
 export default router;
+=======
+import express from 'express'
+import multer from 'multer'
+import { createProduct, updateProduct, getAllProducts, getSingleProduct, deleteProduct } from '../controllers/productController.js'
+import { upload } from '../config/multer.js'
+
+const router = express.Router()
+
+router.post(
+  '/create_product',
+  upload.single('image'),
+  (req, res, next) => { if (req.file) req.body.image = req.file.path; next() },
+  createProduct
+)
+
+router.get('/products', getAllProducts)
+
+router.get('/product/:product_name', getSingleProduct)
+
+router.put('/product/:product_name', updateProduct)
+
+router.delete('/product/:product_name', deleteProduct)
+
+export default router
+>>>>>>> 948c3c9 (Finalized updates for Order and Product controllers)
