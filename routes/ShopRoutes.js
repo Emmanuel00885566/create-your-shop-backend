@@ -21,7 +21,7 @@ router.post("/create_shop", protect,
             return res.status(400).json({ error: "File too large" });
           }
           return res.status(400).json({ error: err.message });
-        }
+        } console.log(req);
         next();
       });
     },
