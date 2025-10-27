@@ -1,4 +1,4 @@
-import Product from '../models/productModel.js'
+import Product from '../models/Product.js'
 
 export function createProductSvc(payload){return Product.create(payload)}
 export function listProductsSvc({search,category}){const q={};if(search)q.product_name={$regex:search,$options:'i'};if(category)q.category=category;return Product.find(q).sort({createdAt:-1})}

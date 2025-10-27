@@ -22,11 +22,11 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 mongoose
   .connect(process.env.MONGO_URI)
-  .then(() => console.log("✅ MongoDB connected successfully"))
-  .catch((err) => console.error("❌ MongoDB connection error:", err));
+  .then(() => console.log("MongoDB connected successfully"))
+  .catch((err) => console.error("MongoDB connection error:", err));
 
 app.get("/", (req, res) => {
-  res.send("🚀 Create Your Shop Backend is running successfully!");
+  res.send("Create Your Shop Backend is running successfully!");
 });
 
 app.use("/api/auth", authRoutes);
@@ -36,5 +36,5 @@ app.use("/api/shops", shopRoutes);
 app.use("/api/dashboard", dashboardRoutes);
 
 app.listen(PORT, () => {
-  console.log(`✅ Server running on http://localhost:${PORT}`);
+  console.log(`Server running on http://localhost:${PORT}`);
 });
