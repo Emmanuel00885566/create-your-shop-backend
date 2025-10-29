@@ -18,28 +18,39 @@ export const getDashboardStats = async (req, res) => {
 
     const totalProducts = await Product.countDocuments({ shop: shopId });
 
-    const orders = await Order.find({ shop: shopId });
+    const orders = await Order.find({ shop: shopId }).select("status total createdAt");
 
-    const totalOrders = orders.length;
-    const completedOrders = orders.filter(o => o.status === "completed").length;
-    const pendingOrders = orders.filter(o => o.status === "pending").length;
+    let totalOrders = 0, completedOrders = 0, pendingOrders = 0, totalRevenue = 0;
 
-    
-    const totalRevenue = orders
-      .filter(o => o.status === "completed")
-      .reduce((sum, order) => sum + order.total, 0);
+orders.forEach(order => {
+  totalOrders++;
+  if (order.status === "completed") {
+    completedOrders++;
+    totalRevenue += order.total;
+  } else if (order.status === "pending") {
+    pendingOrders++;
+  }
+});
 
-    const monthlyStats = await Order.aggregate([
-      { $match: { shop: shopId } },
-      {
-        $group: {
-          _id: { $month: "$createdAt" },
-          totalRevenue: { $sum: "$total" },
-          orders: { $sum: 1 },
-        },
-      },
-      { $sort: { "_id": 1 } },
-    ]);
+
+   const monthlyStats = await Order.aggregate([
+  { $match: { shop: shopId } },
+  {
+    $group: {
+      _id: { $month: "$createdAt" },
+      totalRevenue: { $sum: "$total" },
+      orders: { $sum: 1 },
+    },
+  },
+  { $sort: { "_id": 1 } },
+]).then(data =>
+  data.map(item => ({
+    month: new Date(0, item._id - 1).toLocaleString("default", { month: "short" }),
+    totalRevenue: item.totalRevenue,
+    orders: item.orders,
+  }))
+);
+
 
     res.status(200).json({
       success: true,
@@ -53,7 +64,7 @@ export const getDashboardStats = async (req, res) => {
       },
     });
   } catch (error) {
-    console.error("Dashboard Stats Error:", error);
+    console.error("Error fetching dashboard stats:", error.message);
     res.status(500).json({
       success: false,
       message: "Server error while fetching dashboard stats.",

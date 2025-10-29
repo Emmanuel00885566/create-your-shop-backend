@@ -3,11 +3,13 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
-import authRoutes from "./routes/authRoutes.js";
-import orderRoutes from "./routes/orderRoutes.js";
-import productRoutes from "./routes/productRoutes.js";
-import shopRoutes from "./routes/ShopRoutes.js";
-import dashboardRoutes from "./routes/dashboardRoutes.js";
+// Routes
+import authRoutes from "./routes/authRoutes.js";         // Authentication
+import orderRoutes from "./routes/orderRoutes.js";       // Orders
+import productRoutes from "./routes/productRoutes.js";   // Products
+import shopRoutes from "./routes/ShopRoutes.js";         // Shops
+import dashboardRoutes from "./routes/dashboardRoutes.js"; // Analytics Dashboard
+
 
 dotenv.config();
 
@@ -30,10 +32,21 @@ app.get("/", (req, res) => {
 });
 
 app.use("/api/auth", authRoutes);
+app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/shops", shopRoutes);
-app.use("/api/dashboard", dashboardRoutes);
+
+// -----------------------------
+// Global Error Handler
+// -----------------------------
+app.use((err, req, res, next) => {
+  console.error("Error:", err.stack);
+  res.status(err.statusCode || 500).json({
+    success: false,
+    message: err.message || "Internal Server Error",
+  });
+});
 
 app.listen(PORT, () => {
   console.log(`Server running on http://localhost:${PORT}`);
