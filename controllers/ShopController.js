@@ -1,5 +1,5 @@
 import Shop from "../models/Shop.js";
-import Product from "../models/productModel.js";
+import Product from "../models/Product.js";
 import User from "../models/User.js";
 import slugify from "slugify";
 
@@ -11,13 +11,13 @@ import slugify from "slugify";
 export const createShop = async (req, res) => {
   const userId = req.user._id;
   const { name, description } = req.body;
+  const logoUrl = req.file ? req.file.path : "";
 
   if (!name) {
     return res.status(400).json({ message: "Shop name is required." });
   }
 
   try {
-    // check if user already owns a shop
     const existingShop = await Shop.findOne({ owner: userId });
     if (existingShop) {
       return res.status(400).json({
@@ -25,7 +25,6 @@ export const createShop = async (req, res) => {
       });
     }
 
-    // create unique slug
     let baseSlug = slugify(name, { lower: true, strict: true });
     let slug = baseSlug;
     let counter = 1;
@@ -38,6 +37,7 @@ export const createShop = async (req, res) => {
       owner: userId,
       name,
       slug,
+      logoUrl,
       description,
     });
 
@@ -104,7 +104,6 @@ export const updateShop = async (req, res) => {
 
     const updateData = { ...req.body };
 
-    // handle name change -> new slug
     if (req.body.name) {
       updateData.slug = slugify(req.body.name, { lower: true, strict: true });
     }
@@ -122,5 +121,14 @@ export const updateShop = async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Server error during shop update." });
+  }
+};
+
+export const getAllShops = async (req, res) => {
+  try {
+    const shops = await Shop.find();
+    res.status(200).json(shops);
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
   }
 };
