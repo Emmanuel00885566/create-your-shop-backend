@@ -37,9 +37,6 @@ app.use("/api/orders", orderRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/shops", shopRoutes);
 
-// -----------------------------
-// Global Error Handler
-// -----------------------------
 app.use((err, req, res, next) => {
   console.error("Error:", err.stack);
   res.status(err.statusCode || 500).json({
