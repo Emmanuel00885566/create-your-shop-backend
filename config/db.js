@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-const uri = "mongodb://localhost:27017/shop-manager";
+const uri = process.env.MONGO_URI || "mongodb://localhost:27017/shop-manager";
 
 const connectToMongoDB = async () => {
     try {

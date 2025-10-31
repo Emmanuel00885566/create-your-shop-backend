@@ -6,11 +6,10 @@ import {
   getSingleProduct, 
   deleteProduct 
 } from '../controllers/productController.js';
-import { upload } from '../config/multer.js'; // ✅ Corrected path
+import { upload } from '../config/multer.js'; 
 
 const router = express.Router();
 
-// Product image upload route now supports file upload via Multer
 router.post('/create_product', upload.single('image'), createProduct);
 
 router.get('/products', getAllProducts);
