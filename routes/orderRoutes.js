@@ -13,13 +13,13 @@ const router = express.Router()
 
 router.use(protect)
 
-router.post('/', validateCreateOrder, createOrder)
+router.post('/create_order', validateCreateOrder, createOrder)
 
-router.get('/', listOrders)
+router.get('/list_orders', listOrders)
 
-router.get('/:id', getOrder)
+router.get('/get_order/:id', getOrder)
 
-router.patch('/:id', updateStatus)
+router.patch('/update_order/:id', updateStatus)
 
 router.patch('/:id/delivery', updateDeliveryStatus)
 
