@@ -77,15 +77,6 @@ This project follows the **MVC (Model-View-Controller)** pattern with an additio
 - **Middlewares:** Handle authentication, authorization, and error control.
 - **Config** – Contains app configuration such as Multer setup and database connection.
 This separation ensures cleaner code, easier debugging, and future scalability.
-
-
-## Project Architecture
-
-The backend follows a modular MVC (Model-View-Controller) pattern:
-- **Models** – Define database schemas and relationships using Mongoose.  
-- **Controllers** – Contain logic for each route (handling requests, validations, and responses).  
-- **Routes** – Map endpoints to corresponding controllers.  
-- **Middlewares** – Handle authentication and error management.  
   
 ## Folder Structure
 
@@ -232,7 +223,6 @@ The app will run locally on:
 
 ### Cart
 | Method | Endpoint                          | Description               |
-| ------ | --------------------------------- | ------------------------- |
 | GET    | `/api/cart`                       | View user's cart          |
 | POST   | `/api/cart/add`                   | Add item to cart          |
 | DELETE | `/api/cart/remove/:productId`     | Remove item from cart     |
@@ -252,7 +242,7 @@ The app will run locally on:
 4. **Customer Interaction:** Customers browse a shop’s products, add to cart, and place orders.
 5. **Dashboard Insights:** Shop owners get analytics on sales, revenue, and pending/completed orders.
 
-## 👥 Contributors
+##  Contributors
 
 | Name                   | Role                          |
 | ---------------------- | ----------------------------- |
