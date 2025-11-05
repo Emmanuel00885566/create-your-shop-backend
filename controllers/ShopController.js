@@ -33,7 +33,14 @@ export const getShopBySlug = async (req, res) => {
 
 export const updateShop = async (req, res) => {
   try {
-    const updatedShop = await updateShopService(req.user._id, req.body);
+    const userId = req.user._id;
+    const updates = { ...req.body };
+    if (req.file) {
+      updates.logoUrl = req.file.path;
+    }
+
+    const updatedShop = await updateShopService(userId, updates);
+
     res.status(200).json({
       message: "Shop updated successfully.",
       shop: updatedShop,

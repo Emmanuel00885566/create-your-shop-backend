@@ -14,7 +14,6 @@ A backend system that allows users to create and manage their own online shops. 
 - [Contributors](#contributors)
 - [License](#license)
 
-
 ## Overview
 **Create Your Shop (Multi-Store Web App)** is designed as a scalable backend system that empowers users to own independent online stores within a shared platform.  
 Each shop operates autonomously — allowing users to:

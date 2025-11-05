@@ -40,8 +40,13 @@ router.post(
  * @desc    Update existing shop (vendor/admin only)
  * @access  Private
  */
-router.put("/update_shop", protect, authorize("vendor", "admin"), updateShop);
-
+router.put(
+  "/update_shop",
+  protect,
+  authorize("vendor", "admin"),
+  upload.single("logo"),   // 👈 multer middleware
+  updateShop
+);
 /**
  * @route   GET /api/shops
  * @desc    Get all shops (public)
