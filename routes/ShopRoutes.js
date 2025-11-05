@@ -44,7 +44,7 @@ router.put(
   "/update_shop",
   protect,
   authorize("vendor", "admin"),
-  upload.single("logo"),   // 👈 multer middleware
+  upload.single("logo"),  
   updateShop
 );
 /**
