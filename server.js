@@ -1,3 +1,4 @@
+// server.js
 import express from "express";
 import mongoose from "mongoose";
 import dotenv from "dotenv";
@@ -10,7 +11,7 @@ import orderRoutes from "./routes/orderRoutes.js";
 import productRoutes from "./routes/productRoutes.js";
 import shopRoutes from "./routes/ShopRoutes.js";
 import dashboardRoutes from "./routes/dashboardRoutes.js";
-import cartRoutes from "./routes/CartRoutes.js"; 
+import cartRoutes from "./routes/CartRoutes.js";
 import reviewRoutes from "./routes/reviewRoutes.js";
 
 dotenv.config();
@@ -29,7 +30,17 @@ app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 mongoose
   .connect(process.env.MONGO_URI)
   .then(() => console.log("MongoDB connected successfully"))
-  .catch((err) => console.error("MongoDB connection error:", err));
+  .catch((err) => {
+    console.error("MongoDB connection error:", err);
+    // exit only if you want to force Render to treat this as a failure
+    // process.exit(1);
+  });
+
+// Health/readiness route for Render & monitoring
+app.get("/health", (req, res) => {
+  // lightweight check — you can expand this later to check DB connectivity
+  res.status(200).json({ status: "ok", env: process.env.NODE_ENV || "development" });
+});
 
 // Base route
 app.get("/", (req, res) => {
@@ -42,7 +53,7 @@ app.use("/api/dashboard", dashboardRoutes);
 app.use("/api/orders", orderRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/shops", shopRoutes);
-app.use("/api/cart", cartRoutes); 
+app.use("/api/cart", cartRoutes);
 app.use("/api/reviews", reviewRoutes);
 
 // Error handling middleware
@@ -55,5 +66,5 @@ app.use((err, req, res, next) => {
 });
 
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`Server running on port ${PORT}`);
 });
