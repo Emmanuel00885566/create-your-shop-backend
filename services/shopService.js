@@ -1,4 +1,4 @@
-import Shop from "../models/Shop.js";
+import Shop from "../models/shop.js";
 import Product from "../models/Product.js";
 import slugify from "slugify";
 
