@@ -20,6 +20,7 @@
   "homepage": "https://github.com/Emmanuel00885566/create-your-shop-backend#readme",
   "dependencies": {
     "bcryptjs": "^3.0.2",
+    "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
