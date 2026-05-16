@@ -33,9 +33,8 @@ export const getShopBySlugService = async (slug) => {
   if (!shop) throw new Error("Shop not found.");
 
   const products = await Product.find({
-    shop: shop._id,
-    isAvailable: true,
-  }).select("-__v");
+  shop: shop._id,
+}).select("-__v");
 
   return {
     name: shop.name,
