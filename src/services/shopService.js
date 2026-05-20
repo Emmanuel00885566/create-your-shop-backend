@@ -37,6 +37,7 @@ export const getShopBySlugService = async (slug) => {
 }).select("-__v");
 
   return {
+    _id: shop._id,
     name: shop.name,
     slug: shop.slug,
     logoUrl: shop.logoUrl,
